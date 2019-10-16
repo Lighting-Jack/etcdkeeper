@@ -34,6 +34,9 @@
 		<img id="userButton" src="../framework/easyui/themes/icons/user.png" width="20" style="position:relative;top:7px;cursor:pointer;"></img>
 		<input id="etcdAddr" class="easyui-textbox" data-options="prompt:'127.0.0.1:2379',onChange:changeHost,iconCls:'icon-server',iconAlign:'left'" style="width:360px;height:30px;"/>
 	</div>
+	<div class="noborder">
+		<input id="keyprefix" class="easyui-textbox" data-options="prompt:'127.0.0.1:2379',onChange:changeHost,iconCls:'icon-server',iconAlign:'left'" style="width:360px;height:30px;" value="v2/" placeholder="v2/"/>
+	</div>
 	<div style="margin:20px 0;"></div>
 	<div id="elayout" class="easyui-layout" style="width:100%;height:550px;">
 		<div id="p" data-options="region:'west',tools:'#westTools'" title="Nodes" style="width:30%;padding:10px">
@@ -347,6 +350,8 @@
 		}
 		
 		function showNode(node) {
+			node.path = $("#keyprefix").val()
+			node.text = $("#keyprefix").val()
 			$('#elayout').layout('panel','center').panel('setTitle', node.path);
 			editor.getSession().setValue('');
 			if (node.dir === false) {
