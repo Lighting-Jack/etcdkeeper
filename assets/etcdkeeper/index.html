@@ -172,7 +172,8 @@
 			$('#elayout').height(($(window).height() - 128) + 'px')
 		}
 
-		var separator = $('#keyprefix').val();
+		var separator = "/";
+		var keyPrefix = $('#keyprefix').val()
 		var serverBase = '/v3';
 		var etcdBase = Cookies.get('etcd-endpoint');
 		if (typeof (etcdBase) === 'undefined') {
@@ -297,7 +298,7 @@
 
 		function changeKeyPrefix(newValue) {
 			console.log(newValue);
-			separator = newValue;
+			keyPrefix = newValue;
 			//Cookies.set('keyprefix',newValue,{expires:30});
 			reload()
 		}
@@ -362,8 +363,8 @@
 				id: getId(),
 				children: [],
 				dir: true,
-				path: separator,
-				text: separator,
+				path: keyPrefix,
+				text: keyPrefix,
 				iconCls: 'icon-dir'
 			};
 			tree = [];
@@ -374,7 +375,7 @@
 		}
 
 		function resetValue() {
-			$('#elayout').layout('panel', 'center').panel('setTitle', separator);
+			$('#elayout').layout('panel', 'center').panel('setTitle', keyPrefix);
 			editor.getSession().setValue('');
 			editor.setReadOnly(false);
 			$('#footer').html('&nbsp;');
@@ -537,6 +538,7 @@
 
 		function saveValue() {
 			var node = $('#etree').tree('getSelected');
+			console.log(node)
 			$.ajax({
 				type: 'PUT',
 				timeout: 5000,
@@ -565,6 +567,7 @@
 
 		function createNode() {
 			var node = $('#etree').tree('getSelected');
+			console.log(node)
 			var nodePath = node.path;
 			if (nodePath === separator) {
 				nodePath = ''
@@ -847,6 +850,3 @@
 </body>
 
 </html>
-
-
-
